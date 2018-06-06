@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 namespace Products.Domain
 {
+    using Newtonsoft.Json;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
@@ -16,5 +17,9 @@ namespace Products.Domain
         [MaxLength(50, ErrorMessage ="The faild {0} only can contain {1} character lenght.")]
         [Index("Category_description_Index", IsUnique = true)]
         public string Description { get; set; }
+
+        //Relations
+        [JsonIgnore]
+        public virtual ICollection<Product> Products { get; set; }
     }
 }
