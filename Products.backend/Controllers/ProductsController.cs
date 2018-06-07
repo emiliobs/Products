@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Web;
-using System.Web.Mvc;
-using Products.Domain;
-using Products.backend.Models;
-
-namespace Products.backend.Migrations
+﻿namespace Products.backend.Controllers
 {
+    using System.Data.Entity;
+    using System.Threading.Tasks;
+    using System.Net;
+    using System.Web.Mvc;
+    using Products.Domain;
+    using Products.backend.Models;
+
+    [Authorize(Users = "barrera_emilio@hotmail.com")]
     public class ProductsController : Controller
     {
         private LocalDataContext db = new LocalDataContext();

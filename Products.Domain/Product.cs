@@ -27,10 +27,13 @@
         [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
 
+        public string Image { get; set; }
+
         public double Stock { get; set; }
 
         [Display(Name = "Last Purchase")]
         public DateTime LastPurchase { get; set; }
+            
 
         [DataType(DataType.MultilineText)]
         public string Remarks { get; set; }
