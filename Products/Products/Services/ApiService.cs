@@ -277,9 +277,8 @@
                 var url = $"{servicePrefix}{controller}";
 
                 var response = await client.GetAsync(url);
-
-
-
+                var result = await response.Content.ReadAsStringAsync();
+                
                 if (!response.IsSuccessStatusCode)
                 {
 
@@ -288,29 +287,23 @@
 
                         IsSuccess = false,
 
-                        Message = response.StatusCode.ToString(),
+                        Message = result,
 
                     };
 
-                }
-
-
-
-                var result = await response.Content.ReadAsStringAsync();
+                }      
 
                 var list = JsonConvert.DeserializeObject<List<T>>(result);
 
                 return new Response
-                {
-
+                {    
                     IsSuccess = true,
 
                     Message = "Ok",
 
                     Result = list,
 
-                };
-
+                };   
             }
 
             catch (Exception ex)
@@ -327,9 +320,7 @@
 
             }
 
-        }
-
-
+        }    
 
         public async Task<Response> GetList<T>(
 
