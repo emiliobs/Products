@@ -159,4 +159,10 @@
       <Name>Products</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\LoginRed.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\ic_product.png" />
+  </ItemGroup>
 </Project>

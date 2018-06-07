@@ -1,3 +1,4 @@
+using Products.Views;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,7 +12,7 @@ namespace Products
 		{
 			InitializeComponent();
 
-			MainPage = new MainPage();
+            MainPage = new NavigationPage(new LoginView());
 		}
 
 		protected override void OnStart ()
