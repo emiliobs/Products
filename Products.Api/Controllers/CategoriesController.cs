@@ -1,5 +1,6 @@
 ﻿namespace Products.Api.Controllers
 {
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
@@ -16,9 +17,44 @@
         private LocalDataApiContext db = new LocalDataApiContext();
 
         // GET: api/Categories
-        public IQueryable<Category> GetCategories()
+        public async Task<IHttpActionResult> GetCategories()
         {
-            return db.Categories;
+            var categories = await db.Categories.ToListAsync();
+            var categorieResponse = new List<CategoryResponse>();
+
+            foreach (var categoria in categories)
+            {
+                //aqui creo una lista de products.
+                var productsResponse = new List<ProductResponse>();
+                foreach (var product in categoria.Products)
+                {
+                    productsResponse.Add(new ProductResponse()
+                    {
+                        Description = product.Description,
+                        Image = product.Image,
+                        IsActive = product.IsActive,
+                        LastPurchase = product.LastPurchase,
+                        Price = product.Price,
+                        ProductId = product.ProductId,
+                        Remarks = product.Remarks,
+                        Stock = product.Stock,
+
+                    });
+                }
+
+
+                categorieResponse.Add(new CategoryResponse()
+                {   
+
+                    
+                    CategoryId = categoria.CategoryId,
+                    Description = categoria.Description,
+                    Products = productsResponse,
+
+                });
+            }
+
+            return Ok(categorieResponse);
         }
 
         // GET: api/Categories/5
