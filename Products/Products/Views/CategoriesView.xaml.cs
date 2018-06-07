@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace Products.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class CategoryView : ContentPage
+	public partial class CategoriesView : ContentPage
 	{
-		public CategoryView ()
+		public CategoriesView ()
 		{
 			InitializeComponent ();
 		}

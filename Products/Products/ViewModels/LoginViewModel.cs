@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using Products.Services;
+using Products.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -96,6 +97,8 @@ namespace Products.ViewModels
         #region Construtor
         public LoginViewModel()
         {
+           
+
             apiService = new ApiService();
             dialogService = new DialogService();
             IsToggled = true;
@@ -168,13 +171,16 @@ namespace Products.ViewModels
                 return;
             }
 
-            IsRunning = true;
-            IsEnabled = false;
+            var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.Categories = new CategoriesViewModel();
+           await Application.Current.MainPage.Navigation.PushAsync(new CategoriesView());
+            //await dialogService.ShowMessage("Taraaaaaaann.!!","Welcome to Product sistem...");
 
-            await dialogService.ShowMessage("Taraaaaaaann.!!","Welcome to Product sistem...");
+            Email = string.Empty;
+            Password = string.Empty;
 
             IsRunning = false;
-            IsEnabled = true; ;
+            IsEnabled = true; 
 
         }
         #endregion
