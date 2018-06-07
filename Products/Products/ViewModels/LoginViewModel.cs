@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace Products.ViewModels
 {
@@ -12,6 +13,7 @@ namespace Products.ViewModels
 
         #region Services
 
+        ApiService apiService;
         DialogService dialogService;
 
         #endregion
@@ -93,10 +95,14 @@ namespace Products.ViewModels
 
         #region Construtor
         public LoginViewModel()
-        {                                       
+        {
+            apiService = new ApiService();
             dialogService = new DialogService();
             IsToggled = true;
             IsEnabled = true;
+
+            Email = "emilio@hotmail.com";
+            Password = "555555";
 
         }
         #endregion
@@ -121,6 +127,54 @@ namespace Products.ViewModels
                 return;
             }
 
+            IsRunning = true;
+            IsEnabled = false;
+
+            var connection = await apiService.CheckConnection();
+
+            if (!connection.IsSuccess)
+            {
+                IsRunning = false;
+                IsEnabled = true;
+                await dialogService.ShowMessage("Error", connection.Message);
+
+                return;
+            }
+
+            var apiSecurity = Application.Current.Resources["ApiProduct"].ToString();
+            var response = await apiService.GetToken(apiSecurity, Email,Password);
+
+            if (response == null)
+            {
+                IsRunning = false;
+                IsEnabled = true;
+
+
+                await dialogService.ShowMessage("Error", response.ErrorDescription);
+
+                Password = string.Empty;
+
+                return;
+            }
+
+            if (string.IsNullOrEmpty(response.AccessToken))
+            {
+                IsRunning = false;
+                IsEnabled = true;
+
+                await dialogService.ShowMessage("Error", response.ErrorDescription);
+
+                Password = string.Empty;
+                return;
+            }
+
+            IsRunning = true;
+            IsEnabled = false;
+
+            await dialogService.ShowMessage("Taraaaaaaann.!!","Welcome to Product sistem...");
+
+            IsRunning = false;
+            IsEnabled = true; ;
 
         }
         #endregion

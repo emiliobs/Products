@@ -5,6 +5,9 @@
              x:Class="Products.App">
 	<Application.Resources>
         <ResourceDictionary>
+                    +
+             <!--url api-->
+            <x:String x:Key="ApiProduct">http://productsapi5.azurewebsites.net/</x:String>
             
             <!--Locator-->
             <infra:InstanceLocator x:Key="Locator"></infra:InstanceLocator>
