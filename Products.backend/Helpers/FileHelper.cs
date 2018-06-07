@@ -1,6 +1,6 @@
-﻿using System;
-namespace Products.backend.Helpers
+﻿namespace Products.backend.Helpers
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;

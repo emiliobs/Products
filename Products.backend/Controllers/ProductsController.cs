@@ -6,8 +6,9 @@
     using System.Web.Mvc;
     using Products.Domain;
     using Products.backend.Models;
-    using Products.backend.Helpers;
+ 
     using System;
+    using Products.backend.Helpers;
 
     [Authorize(Users = "barrera_emilio@hotmail.com")]
     public class ProductsController : Controller
