@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Products.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,6 +11,7 @@ namespace Products.ViewModels
         public LoginViewModel Login { get; set; }
         public CategoriesViewModel Categories { get; set; }
         public ProductViewModel  Products { get; set; }
+        public TokenResponse Token { get; set; }
         #endregion
 
         #region Contruct

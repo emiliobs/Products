@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using Products.Models;
 using Products.Services;
 using Products.Views;
 using System;
@@ -92,6 +93,8 @@ namespace Products.ViewModels
             }
         }
 
+        
+
         #endregion
 
         #region Construtor
@@ -145,6 +148,8 @@ namespace Products.ViewModels
             }
 
             var apiSecurity = Application.Current.Resources["ApiProduct"].ToString();
+
+            //aqui obtenfo el token de seguridad:
             var response = await apiService.GetToken(apiSecurity, Email,Password);
 
             if (response == null)
@@ -171,7 +176,11 @@ namespace Products.ViewModels
                 return;
             }
 
+            //Apuntador del patron singleton
             var mainViewModel = MainViewModel.GetInstance();
+            //aqui paso el toke para enviarlo a categoriesviewmodel y porder manupular los datos del api:
+            mainViewModel.Token = response;
+            //hago referencia a una view a otra view solo cuando la necesito invocar...
             mainViewModel.Categories = new CategoriesViewModel();
            await Application.Current.MainPage.Navigation.PushAsync(new CategoriesView());
             //await dialogService.ShowMessage("Taraaaaaaann.!!","Welcome to Product sistem...");
