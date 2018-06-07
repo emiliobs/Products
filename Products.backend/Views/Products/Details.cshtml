@@ -11,15 +11,17 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Category.Description)
+            Category
+            @*@Html.DisplayNameFor(model => model.Category.Description)*@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Category.Description)
+           @Html.DisplayFor(model => model.Category.Description)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            Product
+           @* @Html.DisplayNameFor(model => model.Description)*@
         </dt>
 
         <dd>
@@ -69,6 +71,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }, new { @class = "btn btn-warning" }) 
+    @Html.ActionLink("Back to List", "Index",new { }, new { @class = "btn btn-default" })
 </p>
