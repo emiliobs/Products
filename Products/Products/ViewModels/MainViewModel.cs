@@ -1,19 +1,24 @@
-﻿using Products.Models;
+﻿using GalaSoft.MvvmLight.Command;
+using Products.Models;
+using Products.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 
 namespace Products.ViewModels
 {
    public class MainViewModel
     {
+        #region Services
+        NavigationService navigationService;
+        #endregion
+
         #region Properties
         public LoginViewModel Login { get; set; }
-        public CategoriesViewModel Categories { get; set; }
-        
-        public ProductViewModel  Products { get; set; }
-
-        public NewCategory NewCategory { get; set; }
+        public CategoriesViewModel Categories { get; set; }         
+        public ProductViewModel  Products { get; set; } 
+        public NewCategoryViewService NewCategory { get; set; }
         public TokenResponse Token { get; set; }
         #endregion
 
@@ -24,7 +29,25 @@ namespace Products.ViewModels
             _instance = this;
 
             Login = new LoginViewModel();
+            navigationService = new NavigationService();
         }
+        #endregion
+
+        #region Commands
+        public ICommand NewCategoryCommand { get => new RelayCommand(GoNewCategory); }
+
+
+        #endregion
+
+        #region Methods 
+
+        private async void GoNewCategory()
+        {
+            NewCategory = new NewCategoryViewService();
+            await navigationService.Navigate("NewCategoryView"); 
+        }
+
+
         #endregion
 
         #region Singleton

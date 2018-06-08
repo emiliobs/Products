@@ -15,6 +15,7 @@
         NavigationService navigationService;
 
         #endregion
+
         #region Atributes
         string _email;
         string _password;

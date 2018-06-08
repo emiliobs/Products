@@ -6,9 +6,29 @@
              Title="New Category.">
     <ContentPage.Content>
         <StackLayout Padding="5" BindingContext="{Binding NewCategory}">
-            <Label Text=""
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+            <Label 
+                Text="Category:"
+                FontAttributes="Bold"
+                FontSize="Medium">                
+            </Label>
+            <Entry
+                Text="{Binding Description, Mode=TwoWay}"
+                Placeholder="Enter Category Description.....">
+            </Entry>
+            <ActivityIndicator IsRunning="{Binding IsRunning}" VerticalOptions="CenterAndExpand"></ActivityIndicator>
+            
+                <Button
+               Command="{Binding  SaveCommand}"
+                BorderRadius="23"
+                FontAttributes="Bold"
+                IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+               HeightRequest="46"
+               Text="Save."
+               BackgroundColor="Navy" 
+                    Margin="50,0"
+               TextColor="White"
+                    VerticalOptions="EndAndExpand">
+                </Button>
+            </StackLayout>
     </ContentPage.Content>
 </ContentPage>

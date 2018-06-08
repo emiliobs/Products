@@ -11,6 +11,7 @@
     {
         public async Task Navigate( string viewName)
         {
+            //NewCategoryView
             switch (viewName)
             {
                 case "CategoriesView":  
@@ -19,8 +20,16 @@
                 case "ProductView":
                     await Application.Current.MainPage.Navigation.PushAsync(new ProductView());
                     break;
+                case "NewCategoryView":
+                    await Application.Current.MainPage.Navigation.PushAsync(new NewCategoryView());
+                    break;
             }
 
-        } 
+        }
+
+        public async Task Back()
+        {
+            await Application.Current.MainPage.Navigation.PopAsync();
+        }
     }
 }
