@@ -1,15 +1,10 @@
-﻿using GalaSoft.MvvmLight.Command;
-using Products.Models;
-using Products.Services;
-using Products.Views;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
-using Xamarin.Forms;
-
-namespace Products.ViewModels
+﻿namespace Products.ViewModels
 {
+    using GalaSoft.MvvmLight.Command;
+    using Products.Services;
+    using System.Windows.Input;
+    using Xamarin.Forms;
+
     public class LoginViewModel : BaseViewModel
     {
 
@@ -17,6 +12,7 @@ namespace Products.ViewModels
 
         ApiService apiService;
         DialogService dialogService;
+        NavigationService navigationService;
 
         #endregion
         #region Atributes
@@ -104,6 +100,8 @@ namespace Products.ViewModels
 
             apiService = new ApiService();
             dialogService = new DialogService();
+            navigationService = new NavigationService();
+
             IsToggled = true;
             IsEnabled = true;
 
@@ -182,7 +180,9 @@ namespace Products.ViewModels
             mainViewModel.Token = response;
             //hago referencia a una view a otra view solo cuando la necesito invocar...
             mainViewModel.Categories = new CategoriesViewModel();
-           await Application.Current.MainPage.Navigation.PushAsync(new CategoriesView());
+            await navigationService.Navigate("CategoriesView");
+
+            //await Application.Current.MainPage.Navigation.PushAsync(new CategoriesView());
             //await dialogService.ShowMessage("Taraaaaaaann.!!","Welcome to Product sistem...");
 
             Email = string.Empty;

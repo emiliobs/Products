@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Products.ViewModels
+namespace Products.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ProductsView : ContentPage
+	public partial class ProductView : ContentPage
 	{
-		public ProductsView ()
+		public ProductView ()
 		{
 			InitializeComponent ();
 		}
