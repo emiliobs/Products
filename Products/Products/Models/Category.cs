@@ -16,7 +16,7 @@ namespace Products.Models
         public List<Product> Products { get; set; }
 
 
-        
+
 
         #region Commands
 
@@ -24,7 +24,7 @@ namespace Products.Models
         {
             get
             {
-              return   new RelayCommand(SelectCategory);
+                return new RelayCommand(SelectCategory);
             }
         }
 
