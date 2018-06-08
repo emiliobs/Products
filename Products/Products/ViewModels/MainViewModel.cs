@@ -18,7 +18,7 @@ namespace Products.ViewModels
         public LoginViewModel Login { get; set; }
         public CategoriesViewModel Categories { get; set; }         
         public ProductViewModel  Products { get; set; } 
-        public NewCategoryViewService NewCategory { get; set; }
+        public NewCategoryViewModel NewCategory { get; set; }
         public TokenResponse Token { get; set; }
         #endregion
 
@@ -43,7 +43,7 @@ namespace Products.ViewModels
 
         private async void GoNewCategory()
         {
-            NewCategory = new NewCategoryViewService();
+            NewCategory = new NewCategoryViewModel();
             await navigationService.Navigate("NewCategoryView"); 
         }
 

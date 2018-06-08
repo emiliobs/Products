@@ -16,7 +16,10 @@
         ApiService apiService;
         DialogService dialogService;
         #endregion
+
         #region Atributes
+        List<Category> categories;
+
         ObservableCollection<Category> _categories;
         #endregion
 
@@ -37,6 +40,8 @@
         #region Constructor
         public CategoriesViewModel()
         {
+            instance = this;
+
             apiService = new ApiService();
             dialogService = new DialogService();
 
@@ -46,7 +51,34 @@
 
         #endregion
 
+        #region Singlenton
+
+        static CategoriesViewModel instance;
+
+        public static CategoriesViewModel GetInstance()
+        {
+            if (instance == null)
+            {
+                return new CategoriesViewModel();
+            }
+
+            return instance;
+        }
+
+        #endregion
+
         #region Methods
+
+        public void AddCategory (Category category)
+        {
+            //aqui tomo el registro nuevo desde newcategoooryviewmodel y lo adicciones a la colecion
+            //catogeryList que se refresca de forma dinamica.
+            categories.Add(category);
+
+            CategoriesList = new ObservableCollection<Category>(
+                categories.OrderBy(c => c.Description)); 
+
+        }
         private async void LoadCategories()
         {
             var connection = await apiService.CheckConnection();
@@ -77,7 +109,7 @@
             }
 
             //aqui me llega una lista_
-            var categories = (List<Category>)response.Result;
+             categories = (List<Category>)response.Result;
             //aqui porgo la lista en el la colleccion a de la propiedad categorris
             CategoriesList = new ObservableCollection<Category>(categories.OrderBy(c => c.Description));
         }

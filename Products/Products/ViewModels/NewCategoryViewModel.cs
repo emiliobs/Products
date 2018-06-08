@@ -7,7 +7,7 @@
     using Xamarin.Forms;
 
 
-    public class NewCategoryViewService :BaseViewModel
+    public class NewCategoryViewModel :BaseViewModel
     {
 
         #region Services
@@ -68,7 +68,7 @@
         #endregion
 
         #region Construtor
-        public NewCategoryViewService()
+        public NewCategoryViewModel()
         {
 
             apiService = new ApiService();
@@ -129,13 +129,22 @@
                 IsRunning = false;
                 IsEnabled = true;
                  
-                await dialogService.ShowMessage("Error", response.Message);                           
+                await dialogService.ShowMessage("Error", response.Message);  
+                
 
                 return;
             }
 
             //Si llega aqui el nuevo registro se ha creado fde forma correcta:
             //y lo regreso a la página anterior de forma dinamica:
+
+            //Aqui obtengo el resultado creado de la nueva categoria:
+            category = (Category)response.Result;
+
+            //aqui devuelvo el resultado a la clase categoryviewmodel  por medio del patron singleton:
+            var categoViewModel = CategoriesViewModel.GetInstance();
+            categoViewModel.AddCategory(category);
+
             await navigationService.Back();
 
             IsRunning = false;
