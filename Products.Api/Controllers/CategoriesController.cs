@@ -1,5 +1,6 @@
 ﻿namespace Products.Api.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
@@ -114,8 +115,28 @@
                 return BadRequest(ModelState);
             }
 
-            db.Categories.Add(category);
-            await db.SaveChangesAsync();
+            try
+            {
+                db.Categories.Add(category);
+                await db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                if (ex.InnerException != null && 
+                    ex.InnerException.InnerException != null &&
+                    ex.InnerException.InnerException.Message.Contains("Index"))
+                {
+
+                    return BadRequest("There are a record with the same Description.....");
+                }
+                else
+                {
+                   return BadRequest(ex.Message);
+
+                }
+
+
+            }
 
             return CreatedAtRoute("DefaultApi", new { id = category.CategoryId }, category);
         }
