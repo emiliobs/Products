@@ -168,4 +168,7 @@
   <ItemGroup>
     <AndroidResource Include="Resources\ic_product.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_chevron_right.png" />
+  </ItemGroup>
 </Project>

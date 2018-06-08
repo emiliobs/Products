@@ -6,9 +6,45 @@
              Title="Categories.">
     <ContentPage.Content>
         <StackLayout BindingContext="{Binding Categories}" Padding="5">
-            <Label Text="Categories.!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <ListView ItemsSource="{Binding CategoriesList}" HasUnevenRows="True">
+                
+                 <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid> 
+                                                                
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>                                 
+
+
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="Large"
+                                    Grid.Column="0"
+                                    VerticalOptions="Center"
+                                    Text="{Binding Description }">
+                                </Label>
+
+                                <Image
+                                    Grid.Column="1"
+                                   Source="ic_chevron_right"
+                                     HeightRequest="50"
+                                     WidthRequest="50">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                            Command="{Binding SelectCategoryCommand}">                                               
+                                        </TapGestureRecognizer>
+                                    </Image.GestureRecognizers>
+                                </Image>
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -5,6 +5,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Text;
     using Xamarin.Forms;
 
@@ -20,7 +21,7 @@
         #endregion
 
         #region Properties
-        public ObservableCollection<Category> Categories
+        public ObservableCollection<Category> CategoriesList
         { get => _categories;
             set
             {
@@ -75,7 +76,10 @@
                 return;
             }
 
+            //aqui me llega una lista_
             var categories = (List<Category>)response.Result;
+            //aqui porgo la lista en el la colleccion a de la propiedad categorris
+            CategoriesList = new ObservableCollection<Category>(categories.OrderBy(c => c.Description));
         }
         #endregion
     }

@@ -22,5 +22,12 @@ namespace Products.Models
 
         public string Remarks { get; set; }
 
+        public string ImageFullPath
+        {
+            get => $"http://productsbackend5.azurewebsites.net/{Image.Substring(1)}";
+        }
+
+        
+
     }
 }
