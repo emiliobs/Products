@@ -129,7 +129,10 @@
                 IsRunning = false;
                 IsEnabled = true;
                  
-                await dialogService.ShowMessage("Error", response.Message);  
+                await dialogService.ShowMessage("Error", response.Message);
+
+                Description = string.Empty;
+                
                 
 
                 return;
