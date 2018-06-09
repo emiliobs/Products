@@ -39,6 +39,8 @@
 
         public string Remarks { get; set; }
 
+        public byte[] ImageArray { get; set; }
+
         public string ImageFullPath
         {
             get

@@ -3,6 +3,7 @@
     using GalaSoft.MvvmLight.Command;
     using Plugin.Media;
     using Plugin.Media.Abstractions;
+    using Products.Helpers;
     using Products.Models;
     using Products.Services;
     using System;
@@ -87,7 +88,8 @@
             dialogService = new DialogService();
             navigationService = new NavigationService();
 
-            Image = "noimage";
+            ImageSource = "noimage";
+            //Image = "noimage";
             IsActive = true;
             IsEnabled = true;
             LastPurchas = DateTime.Now;
@@ -190,17 +192,27 @@
 
             var mainViewModel = MainViewModel.GetInstance();
 
-            var product = new Product()
+            byte[] imageArray = null;
+
+            if (file != null)
+            {
+                imageArray = FilesHelper.ReadFully(file.GetStream());
+                file.Dispose();
+            }
+
+            
+            var product = new Product
             {
                 CategoryId = mainViewModel.Category.CategoryId,
                 Description = Description,
-                //Image = Image,
+                ImageArray = imageArray,
                 IsActive = IsActive,
                 LastPurchase = LastPurchas,
                 Price = price,
                 Remarks = Remarks,
                 Stock = stock,
             };
+
 
             var connection = await ApiService.CheckConnection();
 
