@@ -19,7 +19,9 @@ namespace Products.ViewModels
         public CategoriesViewModel Categories { get; set; }         
         public ProductViewModel  Products { get; set; } 
         public NewCategoryViewModel NewCategory { get; set; }  
-        public EditCategoryViewModel EditCategory { get; set; }
+        public EditCategoryViewModel EditCategory { get; set; }  
+        public Category Category { get; set; }
+        public NewProductViewModel NewProduct { get; set; }
         public TokenResponse Token { get; set; }
         #endregion
 
@@ -36,11 +38,17 @@ namespace Products.ViewModels
 
         #region Commands
         public ICommand NewCategoryCommand { get => new RelayCommand(GoNewCategory); }
+        public ICommand NewProductCommand { get => new RelayCommand(GoNewProduct); }
 
 
         #endregion
 
         #region Methods 
+        private async void GoNewProduct()
+        {
+            NewProduct = new NewProductViewModel();
+            await navigationService.Navigate("NewProductView");
+        }
 
         private async void GoNewCategory()
         {

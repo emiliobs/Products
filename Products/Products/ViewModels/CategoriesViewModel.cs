@@ -118,8 +118,8 @@
                            mainViewModel.Token.TokenType, mainViewModel.Token.AccessToken, category);
 
             if (!response.IsSuccess)
-            {                
-
+            {
+                IsRefreshing = false;
                 await dialogService.ShowMessage("Error", response.Message); 
                 return;
             }

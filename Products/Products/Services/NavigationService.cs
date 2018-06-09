@@ -26,6 +26,9 @@
                 case "EditCategoryView":
                     await Application.Current.MainPage.Navigation.PushAsync(new EditCategoryView());
                     break;
+                case "NewProductView":
+                    await Application.Current.MainPage.Navigation.PushAsync(new NewProductView());
+                    break;
             }
 
         }

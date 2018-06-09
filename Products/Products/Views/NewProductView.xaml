@@ -1,36 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Products.Views.NewCategoryView"
+             x:Class="Products.Views.NewProductView"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
-             Title="New Category.">
-    
+             Title="New Products.">
+
     <ContentPage.Content>
-        <StackLayout Padding="5" BindingContext="{Binding NewCategory}">
+        <StackLayout Padding="5" BindingContext="{Binding NewProducts}">
             <Label 
                 Text="Category:"
                 FontAttributes="Bold"
-                FontSize="Medium">                
+                FontSize="Medium">
             </Label>
             <Entry
                 Text="{Binding Description, Mode=TwoWay}"
                 Placeholder="Enter Category Description.....">
             </Entry>
             <ActivityIndicator IsRunning="{Binding IsRunning}" VerticalOptions="CenterAndExpand"></ActivityIndicator>
-            
-                <Button
+
+            <Button
                Command="{Binding  SaveCommand}"
                 BorderRadius="23"
                 FontAttributes="Bold"
                 IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                HeightRequest="46"
-               Text="Save Category."
+               Text="Save Product."
                BackgroundColor="Navy" 
                     Margin="50,0"
                TextColor="White"
                     VerticalOptions="EndAndExpand">
-                </Button>
-            </StackLayout>
+            </Button>
+        </StackLayout>
     </ContentPage.Content>
-    
 </ContentPage>

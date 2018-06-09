@@ -81,6 +81,7 @@ namespace Products.Models
         private async void SelectCategory()
         {
             var mainViewModel = MainViewModel.GetInstance();
+            mainViewModel.Category = this;
             mainViewModel.Products = new ProductViewModel(Products);
             await navigationService.Navigate("ProductView");
             //await Application.Current.MainPage.Navigation.PushAsync(new ProductsView());
