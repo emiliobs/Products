@@ -16,6 +16,7 @@ namespace Products.Models
         #region services
 
         NavigationService navigationService;
+        DialogService dialogService;
 
         #endregion
 
@@ -30,12 +31,15 @@ namespace Products.Models
         public Category()
         {
             navigationService = new NavigationService();
+            dialogService = new DialogService();
         }
 
         #endregion
 
         #region Commands
 
+        public ICommand DeleteCommand { get => new RelayCommand(Delete); }        
+        public ICommand EditCommand { get => new RelayCommand(Edit); }
         public ICommand SelectCategoryCommand
         {
             get
@@ -44,9 +48,35 @@ namespace Products.Models
             }
         }
 
+
         #endregion
 
         #region Methods
+
+        private async void Delete()
+        {
+            var response = await dialogService.ShowConfirm("Confirm.","Are you sure to delete this record?");
+
+            if (!response)
+            {
+                return;
+            }
+
+            await CategoriesViewModel.GetInstance().DeleteCategory(this);
+        }
+
+
+        public override int GetHashCode()
+        {
+            return CategoryId;
+        }
+
+        private async void Edit()
+        {
+
+            MainViewModel.GetInstance().EditCategory = new EditCategoryViewModel(this);
+            await navigationService.Navigate("EditCategoryView");
+        }
 
         private async void SelectCategory()
         {

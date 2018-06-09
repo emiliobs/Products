@@ -18,7 +18,8 @@ namespace Products.ViewModels
         public LoginViewModel Login { get; set; }
         public CategoriesViewModel Categories { get; set; }         
         public ProductViewModel  Products { get; set; } 
-        public NewCategoryViewModel NewCategory { get; set; }
+        public NewCategoryViewModel NewCategory { get; set; }  
+        public EditCategoryViewModel EditCategory { get; set; }
         public TokenResponse Token { get; set; }
         #endregion
 

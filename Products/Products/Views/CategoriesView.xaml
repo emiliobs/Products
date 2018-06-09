@@ -5,18 +5,30 @@
               BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="Categories.">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Icon="ic_add_circle" Text="Add New Categories." Command="{Binding NewCategoryCommand}"></ToolbarItem>
+        <ToolbarItem Icon="ic_action_add_circle" Text="Add New Categories." Command="{Binding NewCategoryCommand}"></ToolbarItem>
     </ContentPage.ToolbarItems>
     
     <ContentPage.Content>
         <StackLayout BindingContext="{Binding Categories}" Padding="5">
-            <ListView ItemsSource="{Binding CategoriesList}" HasUnevenRows="True">
+            <ListView ItemsSource="{Binding CategoriesList}"
+                      HasUnevenRows="True"
+                      IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                      IsPullToRefreshEnabled="True"
+                      RefreshCommand="{Binding RefreshCommand}">
                 
                  <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid> 
-                                                                
+
+                            <ViewCell.ContextActions>
+                                <MenuItem Command="{Binding EditCommand}" Text="Edit"></MenuItem>
+                                <MenuItem 
+                                    Command="{Binding DeleteCommand}"
+                                    Text="Delete." IsDestructive="True">                                    
+                                </MenuItem>
+                            </ViewCell.ContextActions>   
+                            
+                            <Grid>                                                                 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                     <ColumnDefinition Width="Auto"></ColumnDefinition>
@@ -51,4 +63,5 @@
             </ListView>
         </StackLayout>
     </ContentPage.Content>
+    
 </ContentPage>
