@@ -27,7 +27,7 @@
 
         public string Description { get; set; }
 
-        public double Price { get; set; }
+        public decimal Price { get; set; }
 
         public bool IsActive { get; set; }
 
@@ -41,7 +41,18 @@
 
         public string ImageFullPath
         {
-            get => $"http://productsbackend5.azurewebsites.net/{Image.Substring(1)}";
+            get
+            {
+                if (string.IsNullOrEmpty(Image))
+                {
+                    return "noimage";
+                }
+                else
+                {
+                    //return  $"http://productsbackend5.azurewebsites.net/{Image.Substring(1)}";
+                    return $"https://productsapi5.azurewebsites.net/{Image.Substring(1)}";
+                }
+            }
         }
 
         #endregion

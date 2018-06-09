@@ -11,7 +11,11 @@
     
     <ContentPage.Content>
         <StackLayout BindingContext="{Binding Products}" Padding="5">
-            <ListView ItemsSource="{Binding ProductList}" HasUnevenRows="True">
+            <ListView 
+                ItemsSource="{Binding ProductList}" 
+                HasUnevenRows="True"
+                IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}"
+                IsPullToRefreshEnabled="True">
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -35,7 +39,7 @@
                                 <Label
                                     FontAttributes="Bold"
                                     FontSize="Large"
-                                    HorizontalOptions="FillAndExpand"
+                                    HorizontalOptions="StartAndExpand"
                                     Grid.Column="1"
                                     VerticalOptions="Center"
                                     Text="{Binding Description}">

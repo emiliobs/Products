@@ -65,7 +65,7 @@
 
                 <Image
                     HeightRequest="200"
-                    Source="noimage.png"
+                    Source="{Binding ImageSource, Mode=TwoWay}"
                     WidthRequest="200">
                     <Image.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ChangeImageCommand}"/>

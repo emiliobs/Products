@@ -1,11 +1,15 @@
-﻿namespace Products.Api.Controllers
+﻿
+namespace Products.Api.Controllers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Data;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     using System.IO;
     using System.Linq;
     using System.Net;
+    using System.Net.Http;
     using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Http.Description;
@@ -16,7 +20,7 @@
     [Authorize]
     public class ProductsController : ApiController
     {
-        private LocalDataApiContext db = new LocalDataApiContext();
+        private DataContext db = new DataContext();
 
         // GET: api/Products
         public IQueryable<Product> GetProducts()
@@ -51,18 +55,13 @@
                 return BadRequest();
             }
 
-            if (id != request.ProductId)
-            {
-                return BadRequest();
-            }
-
             if (request.ImageArray != null && request.ImageArray.Length > 0)
             {
                 var stream = new MemoryStream(request.ImageArray);
                 var guid = Guid.NewGuid().ToString();
-                var file = $"{guid}.jpg";
+                var file = string.Format("{0}.jpg", guid);
                 var folder = "~/Content/Images";
-                var fullPath = $"{folder}/{file}";
+                var fullPath = string.Format("{0}/{1}", folder, file);
                 var response = FilesHelper.UploadPhoto(stream, folder, file);
 
                 if (response)
@@ -71,7 +70,7 @@
                 }
             }
 
-            var product = ToProduct(request);            
+            var product = ToProduct(request);
             db.Entry(product).State = EntityState.Modified;
 
             try
@@ -80,7 +79,8 @@
             }
             catch (Exception ex)
             {
-                if (ex.InnerException != null && ex.InnerException.InnerException != null && 
+                if (ex.InnerException != null &&
+                    ex.InnerException.InnerException != null &&
                     ex.InnerException.InnerException.Message.Contains("Index"))
                 {
                     return BadRequest("There are a record with the same description.");
@@ -93,8 +93,6 @@
 
             return Ok(product);
         }
-
-       
 
         // POST: api/Products
         [ResponseType(typeof(Product))]
@@ -109,9 +107,9 @@
             {
                 var stream = new MemoryStream(request.ImageArray);
                 var guid = Guid.NewGuid().ToString();
-                var file = $"{guid}.jpg";
+                var file = string.Format("{0}.jpg", guid);
                 var folder = "~/Content/Images";
-                var fullPath = $"{folder}/{file}";
+                var fullPath = string.Format("{0}/{1}", folder, file);
                 var response = FilesHelper.UploadPhoto(stream, folder, file);
 
                 if (response)
@@ -120,19 +118,17 @@
                 }
             }
 
-            var product = ToProduct(request);   
-
+            var product = ToProduct(request);
             db.Products.Add(product);
-
             try
             {
                 await db.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-
-                if (ex.InnerException != null && ex.InnerException.InnerException != null &&
-                     ex.InnerException.InnerException.Message.Contains("Index"))
+                if (ex.InnerException != null &&
+                    ex.InnerException.InnerException != null &&
+                    ex.InnerException.InnerException.Message.Contains("Index"))
                 {
                     return BadRequest("There are a record with the same description.");
                 }
@@ -143,6 +139,23 @@
             }
 
             return CreatedAtRoute("DefaultApi", new { id = product.ProductId }, product);
+        }
+
+        private Product ToProduct(ProductRequest request)
+        {
+            return new Product
+            {
+                Category = request.Category,
+                CategoryId = request.CategoryId,
+                Description = request.Description,
+                Image = request.Image,
+                IsActive = request.IsActive,
+                LastPurchase = request.LastPurchase,
+                Price = request.Price,
+                ProductId = request.ProductId,
+                Remarks = request.Remarks,
+                Stock = request.Stock,
+            };
         }
 
         // DELETE: api/Products/5
@@ -156,18 +169,17 @@
             }
 
             db.Products.Remove(product);
-
             try
             {
                 await db.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-
-                if (ex.InnerException != null && ex.InnerException.InnerException != null &&
+                if (ex.InnerException != null &&
+                    ex.InnerException.InnerException != null &&
                     ex.InnerException.InnerException.Message.Contains("REFERENCE"))
                 {
-                    return BadRequest("You can't Delete this records, because it has related record.");
+                    return BadRequest("You can't delete this record, becase it has related record.");
                 }
                 else
                 {
@@ -176,24 +188,6 @@
             }
 
             return Ok(product);
-        }
-
-        private Product ToProduct(ProductRequest request)
-        {
-            return new Product()
-            {
-              Category = request.Category,
-              CategoryId = request.CategoryId,
-              Description = request.Description,
-              Image = request.Image,
-              IsActive= request.IsActive,
-              LastPurchase = request.LastPurchase,
-              Price = request.Price,
-              ProductId = request.ProductId,
-              Remarks = request.Remarks,
-              Stock = request.Stock,
-
-            };
         }
 
         protected override void Dispose(bool disposing)

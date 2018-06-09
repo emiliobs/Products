@@ -1,5 +1,20 @@
-﻿namespace Products.Api.Controllers
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Description;
+using Products.Domain;
+
+namespace Products.Api.Controllers
 {
+    using Domain;
+    using Models;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
@@ -9,28 +24,26 @@
     using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Http.Description;
-    using Products.Api.Models;
-    using Products.Domain;
 
     [Authorize]
     public class CategoriesController : ApiController
     {
-        private LocalDataApiContext db = new LocalDataApiContext();
+        private DataContext db = new DataContext();
 
         // GET: api/Categories
         public async Task<IHttpActionResult> GetCategories()
         {
             var categories = await db.Categories.ToListAsync();
-            var categorieResponse = new List<CategoryResponse>();
+            var categoriesResponse = new List<CategoryResponse>();
 
-            foreach (var categoria in categories)
+            foreach (var category in categories)
             {
-                //aqui creo una lista de products.
                 var productsResponse = new List<ProductResponse>();
-                foreach (var product in categoria.Products)
+                foreach (var product in category.Products)
                 {
-                    productsResponse.Add(new ProductResponse()
+                    productsResponse.Add(new ProductResponse
                     {
+                        CategoryId = product.CategoryId,
                         Description = product.Description,
                         Image = product.Image,
                         IsActive = product.IsActive,
@@ -39,23 +52,18 @@
                         ProductId = product.ProductId,
                         Remarks = product.Remarks,
                         Stock = product.Stock,
-
                     });
                 }
 
-
-                categorieResponse.Add(new CategoryResponse()
-                {   
-
-                    
-                    CategoryId = categoria.CategoryId,
-                    Description = categoria.Description,
+                categoriesResponse.Add(new CategoryResponse
+                {
+                    CategoryId = category.CategoryId,
+                    Description = category.Description,
                     Products = productsResponse,
-
                 });
             }
 
-            return Ok(categorieResponse);
+            return Ok(categoriesResponse);
         }
 
         // GET: api/Categories/5
@@ -97,15 +105,12 @@
                     ex.InnerException.InnerException != null &&
                     ex.InnerException.InnerException.Message.Contains("Index"))
                 {
-
-                    return BadRequest("There are a record with the same Description.....");
+                    return BadRequest("There are a record with the same description.");
                 }
                 else
                 {
                     return BadRequest(ex.Message);
-
-                }    
-
+                }
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -120,27 +125,23 @@
                 return BadRequest(ModelState);
             }
 
+            db.Categories.Add(category);
             try
             {
-                db.Categories.Add(category);
                 await db.SaveChangesAsync();
             }
             catch (Exception ex)
             {
-                if (ex.InnerException != null && 
+                if (ex.InnerException != null &&
                     ex.InnerException.InnerException != null &&
                     ex.InnerException.InnerException.Message.Contains("Index"))
                 {
-
-                    return BadRequest("There are a record with the same Description.....");
+                    return BadRequest("There are a record with the same description.");
                 }
                 else
                 {
-                   return BadRequest(ex.Message);
-
+                    return BadRequest(ex.Message);
                 }
-
-
             }
 
             return CreatedAtRoute("DefaultApi", new { id = category.CategoryId }, category);
@@ -157,7 +158,6 @@
             }
 
             db.Categories.Remove(category);
-
             try
             {
                 await db.SaveChangesAsync();
@@ -168,16 +168,12 @@
                     ex.InnerException.InnerException != null &&
                     ex.InnerException.InnerException.Message.Contains("REFERENCE"))
                 {
-
-                    return BadRequest("You can't delete this record, because it has related record.");
+                    return BadRequest("You can't delete this record, becase it has related record.");
                 }
                 else
                 {
                     return BadRequest(ex.Message);
-
                 }
-
-
             }
 
             return Ok(category);

@@ -246,7 +246,6 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CategoryResponse.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\LocalDataApiContext.cs" />
     <Compile Include="Models\ProductRequest.cs" />
     <Compile Include="Models\ProductResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

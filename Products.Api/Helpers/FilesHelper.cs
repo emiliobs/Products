@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Web;
 
 namespace Products.Api.Helpers
 {
+    using System.IO;
+    using System.Web;
+
     public class FilesHelper
     {
         public static bool UploadPhoto(MemoryStream stream, string folder, string name)
