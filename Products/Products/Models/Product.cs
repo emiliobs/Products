@@ -1,11 +1,12 @@
 ﻿namespace Products.Models
 {
-    using GalaSoft.MvvmLight.Command;
-    using Products.Services;
     using System;
-    using System.Collections.Generic;
-    using System.Text;
     using System.Windows.Input;
+    using GalaSoft.MvvmLight.Command;
+    using Services;
+    using SQLite.Net.Attributes;
+    using SQLiteNetExtensions.Attributes;
+    using ViewModels;
 
     public class Product
     {
@@ -14,9 +15,15 @@
         #endregion
 
         #region Properties
+       
+        [PrimaryKey, AutoIncrement]
         public int ProductId { get; set; }
 
+        [ForeignKey(typeof(Category))]
         public int CategoryId { get; set; }
+
+        [ManyToOne]
+        public Category Category { get; set; }
 
         public string Description { get; set; }
 
