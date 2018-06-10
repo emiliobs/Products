@@ -5,8 +5,16 @@
              x:Class="Products.App">
 	<Application.Resources>
         <ResourceDictionary>
-                    +
-             <!--url api-->
+
+            <!-- Colors -->
+            <Color x:Key="MainColor">#1CA5B8</Color>
+            <Color x:Key="FontColor">#012C40</Color>
+            <Color x:Key="AccentColor1">#FF5521</Color>
+            <Color x:Key="AccentColor2">#4DB84B</Color>
+            <Color x:Key="BackgroundColor">#DAEBF2</Color>
+
+
+            <!--url api-->
             <x:String x:Key="ApiProduct">http://productsapi5.azurewebsites.net/</x:String>
             
             <!--Locator-->
