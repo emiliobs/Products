@@ -1,14 +1,24 @@
 ﻿namespace Products.ViewModels 
 {
     using Products.Models;
+    using Products.Services;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Threading.Tasks;
+    using Xamarin.Forms;
 
     public class ProductViewModel: BaseViewModel
     {
+        #region services
+
+        ApiService apiService;
+        DialogService dialogService;
+        NavigationService navigationService;
+
+        #endregion
+
         #region Atributes
         private List<Product> products;
 
@@ -52,7 +62,9 @@
         public ProductViewModel(List<Product> products)
         {
             this.products = products;
-
+            apiService = new ApiService();
+            navigationService = new NavigationService();
+            dialogService = new DialogService();
             instance = this;
 
             ProductList = new ObservableCollection<Product>(products.OrderBy(p => p.Description));
@@ -72,7 +84,11 @@
            return instance;
         }
 
-        internal void  AddProduct(Product product)
+        #endregion
+
+        #region Methods
+
+        public void AddProduct(Product product)
         {
             IsRefreshing = true;
 
@@ -80,7 +96,7 @@
             ProductList = new ObservableCollection<Product>(products.OrderBy(p => p.Description));
 
             IsRefreshing = false;
-            
+
         }
 
         public void Update(Product product)
@@ -94,14 +110,41 @@
             IsRefreshing = false;
         }
 
-        internal Task Delete(Product product)
+        public async void DeleteProduct(Product product)
         {
-            throw new NotImplementedException();
+            IsRefreshing = true;
+
+            var connection = await apiService.CheckConnection();
+
+            if (!connection.IsSuccess)
+            {
+                IsRefreshing = false;
+                await dialogService.ShowMessage("Error", connection.Message);
+                return;
+
+            }
+
+            var mainViewModel = MainViewModel.GetInstance();
+
+            var apiSecurity = Application.Current.Resources["ApiProduct"].ToString();   
+            var response = await apiService.Delete(apiSecurity,"/api","/Products",
+                                                   mainViewModel.Token.TokenType, 
+                                                   mainViewModel.Token.AccessToken,
+                                                   product);
+
+            if (!response.IsSuccess)
+            {
+                IsRefreshing = false;
+                await dialogService.ShowMessage("Error",response.Message);
+                return;
+            }
+
+            products.Remove(product);
+            ProductList = new ObservableCollection<Product>(products.OrderBy(p => p.Description));
+
+            IsRefreshing = false;
+
         }
-
-        #endregion
-
-        #region Methods
 
         #endregion
 

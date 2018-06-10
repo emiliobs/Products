@@ -40,8 +40,7 @@ namespace Products.ViewModels
         #region Commands
         public ICommand NewCategoryCommand { get => new RelayCommand(GoNewCategory); }
         public ICommand NewProductCommand { get => new RelayCommand(GoNewProduct); }
-
-
+       
         #endregion
 
         #region Methods 

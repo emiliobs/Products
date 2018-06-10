@@ -92,6 +92,8 @@
             {
                 return;
             }
+
+            ProductViewModel.GetInstance().DeleteProduct(this);
         }
 
         private async void Edit()
@@ -101,10 +103,7 @@
         }
         #endregion
 
-
-
-
-    }
+      }
 
        
     }

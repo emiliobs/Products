@@ -721,8 +721,7 @@
 
                 var url = $"{servicePrefix}{controller}/{model.GetHashCode()}";
                 //var url = string.Format("{0}{1}/{2}", servicePrefix, controller, model.GetHashCode()); 
-                var response = await client.DeleteAsync(url);
-
+                var response = await client.DeleteAsync(url); 
                 var result = await response.Content.ReadAsStringAsync();
 
                 if (!response.IsSuccessStatusCode)
@@ -731,8 +730,7 @@
                     error.IsSuccess = false;
                     return error;
                 }
-                var newRecord = JsonConvert.DeserializeObject<Response>(result);
-
+                
                 return new Response
                 {
 
