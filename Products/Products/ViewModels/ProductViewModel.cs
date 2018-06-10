@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public class ProductViewModel: BaseViewModel
     {
@@ -80,6 +81,22 @@
 
             IsRefreshing = false;
             
+        }
+
+        public void Update(Product product)
+        {
+            IsRefreshing = true;
+
+            var oldProduct = products.Where(p => p.ProductId == product.ProductId).FirstOrDefault();
+            oldProduct = product;
+            ProductList = new ObservableCollection<Product>(products.OrderBy(p => p.Description));
+
+            IsRefreshing = false;
+        }
+
+        internal Task Delete(Product product)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

@@ -4,6 +4,7 @@
              x:Class="Products.Views.EditCategoryView"
               BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="Edit Categories.">
+    
     <ContentPage.Content>
         <StackLayout Padding="5" BindingContext="{Binding EditCategory}">
             <Label 
@@ -31,4 +32,5 @@
             </Button>
         </StackLayout>
     </ContentPage.Content>
+    
 </ContentPage>

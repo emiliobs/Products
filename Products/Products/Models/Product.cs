@@ -12,6 +12,7 @@
     {
         #region Service
         NavigationService navigationService;
+        DialogService dialogService;
         #endregion
 
         #region Properties
@@ -56,6 +57,10 @@
                 }
             }
         }
+        public override int GetHashCode()
+        {
+            return ProductId;
+        }
 
         #endregion
 
@@ -63,21 +68,43 @@
         public Product()
         {
             navigationService = new NavigationService();
+            dialogService = new DialogService();
         }
         #endregion
 
         #region Commands
-       
 
+        public ICommand DeleteCommand { get => new RelayCommand(Delete); }
+
+        
+
+        public ICommand EditCommand { get => new RelayCommand(Edit); }
 
         #endregion
 
         #region Methods
-       
+
+        private async void Delete()
+        {
+            var response = await dialogService.ShowConfirm("Confirm.", "Are you sure to delete this record?");
+
+            if (!response)
+            {
+                return;
+            }
+        }
+
+        private async void Edit()
+        {
+            MainViewModel.GetInstance().EditProduct = new EditProductViewModel(this);
+            await navigationService.Navigate("EditProductView");
+        }
         #endregion
 
 
 
 
     }
-}
+
+       
+    }
