@@ -9,6 +9,7 @@
             BindingContext="{Binding NewCustomer}">
             <StackLayout
                 Padding="10">
+                <Image Source="newuser" HeightRequest="100" ></Image>                  
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

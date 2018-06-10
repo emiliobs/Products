@@ -7,6 +7,6 @@
     using System.Web;
     public class LocalDataContext: DataContext
     {
-       
+        public System.Data.Entity.DbSet<Products.Domain.Customer> Customers { get; set; }
     }
 }

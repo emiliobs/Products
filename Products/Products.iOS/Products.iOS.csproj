@@ -188,4 +188,10 @@
   <ItemGroup>
     <BundleResource Include="Resources\noimage.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\newcustomer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\newuser.jpg" />
+  </ItemGroup>
 </Project>

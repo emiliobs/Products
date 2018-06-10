@@ -23,5 +23,7 @@ namespace Products.Domain
         {
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
+
+        public System.Data.Entity.DbSet<Products.Domain.Customer> Customers { get; set; }
     }
 }
