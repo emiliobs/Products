@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Products.Views.NewProductView"
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
-             Title="New Products.">   
+             Title="New Product.">   
     <ContentPage.Content>
         <ScrollView
             BindingContext="{Binding NewProduct}">

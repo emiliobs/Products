@@ -2,6 +2,7 @@
 {
     using GalaSoft.MvvmLight.Command;
     using Products.Services;
+    using System;
     using System.Windows.Input;
     using Xamarin.Forms;
 
@@ -114,10 +115,20 @@
 
         #region Commands
         public ICommand LoginCommand { get => new RelayCommand(Login); }
+        public ICommand RegisterNewUserCommand { get => new RelayCommand(RegisterNewUse); }
+
+
 
         #endregion
 
         #region Methods
+
+        private async void RegisterNewUse()
+        {
+            MainViewModel.GetInstance().NewCustomer = new NewCustomerViewModel();
+            await navigationService.Navigate("NewCustomerView");
+        }
+
         private async void Login()
         {
             if (string.IsNullOrEmpty(Email))

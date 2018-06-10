@@ -23,6 +23,7 @@ namespace Products.ViewModels
         public Category Category { get; set; }
         public NewProductViewModel NewProduct { get; set; }
         public EditProductViewModel EditProduct { get; set; }
+        public NewCustomerViewModel NewCustomer { get; set; }
         public TokenResponse Token { get; set; }
         #endregion
 
