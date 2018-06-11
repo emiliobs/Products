@@ -61,7 +61,10 @@
                 case "EditProductView":
                     await App.Navigator.PushAsync(new EditProductView());
                     break;
-                
+                case "UbicationsView":
+                    await  App.Navigator.PushAsync(new UbicationsView());
+                    break;
+
             }
 
         }

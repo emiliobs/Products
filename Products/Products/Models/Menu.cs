@@ -39,7 +39,7 @@
 
         #region Commands
 
-        private void Navigate()
+        private async void Navigate()
         {
            switch(PageName)
            {
@@ -47,7 +47,11 @@
                     MainViewModel.GetInstance().Login = new LoginViewModel();
                     navigationService.SetMainPage("LoginView");
                     break;
-           }
+                case "UbicationsView":
+                    MainViewModel.GetInstance().Ubications = new UbicationsView();
+                    await navigationService.NavigateOnMaster("UbicationsView");
+                    break;
+            }
         }
 
         #endregion
