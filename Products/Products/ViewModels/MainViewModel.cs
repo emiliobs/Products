@@ -3,6 +3,7 @@ using Products.Models;
 using Products.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
 
@@ -25,6 +26,7 @@ namespace Products.ViewModels
         public EditProductViewModel EditProduct { get; set; }
         public NewCustomerViewModel NewCustomer { get; set; }
         public TokenResponse Token { get; set; }
+        public  ObservableCollection<Menu> MyMenu { get; set; }
         #endregion
 
         #region Contruct
@@ -35,16 +37,52 @@ namespace Products.ViewModels
 
             Login = new LoginViewModel();
             navigationService = new NavigationService();
+            LoadMenu();
         }
+
+      
         #endregion
 
         #region Commands
         public ICommand NewCategoryCommand { get => new RelayCommand(GoNewCategory); }
         public ICommand NewProductCommand { get => new RelayCommand(GoNewProduct); }
-       
+
         #endregion
 
         #region Methods 
+
+        private void LoadMenu()
+        {
+            MyMenu = new ObservableCollection<Menu>();
+
+            MyMenu.Add(new Menu
+            {
+                Icon = "ic_settings",
+                pageName = "MyProfileView",
+                Title = "My Profile",
+                
+
+            });
+
+            MyMenu.Add(new Menu
+            {
+                Icon = "ic_map",
+                pageName = "UbicationsView",
+                Title = "Ubications",
+
+
+            });
+
+            MyMenu.Add(new Menu
+            {
+                Icon = "ic_exit_to_app",
+                pageName = "LoginView",
+                Title = "Close Sesión",
+
+
+            });
+        }   
+
         private async void GoNewProduct()
         {
             NewProduct = new NewProductViewModel();
