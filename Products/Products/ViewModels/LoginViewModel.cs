@@ -126,7 +126,7 @@
         private async void RegisterNewUse()
         {
             MainViewModel.GetInstance().NewCustomer = new NewCustomerViewModel();
-            await navigationService.Navigate("NewCustomerView");
+            await navigationService.NavigateOnLogin("NewCustomerView");
         }
 
         private async void Login()
@@ -192,7 +192,7 @@
             mainViewModel.Token = response;
             //hago referencia a una view a otra view solo cuando la necesito invocar...
             mainViewModel.Categories = new CategoriesViewModel();
-            await navigationService.Navigate("CategoriesView");
+            navigationService.SetMainPage("MasterView");
 
             //await Application.Current.MainPage.Navigation.PushAsync(new CategoriesView());
             //await dialogService.ShowMessage("Taraaaaaaann.!!","Welcome to Product sistem...");

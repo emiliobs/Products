@@ -243,7 +243,7 @@
             var productsViewModel = ProductViewModel.GetInstance();
             productsViewModel.AddProduct(product);
 
-            await navigationService.Back();
+            await navigationService.BackOnMaster();
 
             IsRunning = false;
             IsEnabled = true;

@@ -146,7 +146,7 @@
             var categoViewModel = CategoriesViewModel.GetInstance();
             categoViewModel.UpdateCategory(category);
 
-            await navigationService.Back();
+            await navigationService.BackOnMaster();
 
             IsRunning = false;
             IsEnabled = true;

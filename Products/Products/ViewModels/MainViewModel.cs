@@ -86,13 +86,13 @@ namespace Products.ViewModels
         private async void GoNewProduct()
         {
             NewProduct = new NewProductViewModel();
-            await navigationService.Navigate("NewProductView");
+            await navigationService.NavigateOnMaster("NewProductView");
         }
 
         private async void GoNewCategory()
         {
             NewCategory = new NewCategoryViewModel();
-            await navigationService.Navigate("NewCategoryView"); 
+            await navigationService.NavigateOnMaster("NewCategoryView"); 
         }
 
 

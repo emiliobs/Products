@@ -9,7 +9,8 @@ namespace Products
 	public partial class App : Application
 	{
         #region Properties
-        public static NavigationPage Navigator { get; internal set; } 
+        public static NavigationPage Navigator { get; internal set; }
+        public static MasterView Master { get; internal set; }
         #endregion
 
         #region Constructs
@@ -17,8 +18,8 @@ namespace Products
         {
             InitializeComponent();
 
-            MainPage = new MasterView();
-            //MainPage = new NavigationPage(new LoginView());
+            //MainPage = new MasterView();
+            MainPage = new NavigationPage(new LoginView());
         } 
         #endregion
 

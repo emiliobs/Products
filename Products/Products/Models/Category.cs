@@ -75,7 +75,7 @@ namespace Products.Models
         {
 
             MainViewModel.GetInstance().EditCategory = new EditCategoryViewModel(this);
-            await navigationService.Navigate("EditCategoryView");
+            await navigationService.NavigateOnMaster("EditCategoryView");
         }
 
         private async void SelectCategory()
@@ -83,7 +83,7 @@ namespace Products.Models
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Category = this;
             mainViewModel.Products = new ProductViewModel(Products);
-            await navigationService.Navigate("ProductView");
+            await navigationService.NavigateOnMaster("ProductView");
             //await Application.Current.MainPage.Navigation.PushAsync(new ProductsView());
 
         }

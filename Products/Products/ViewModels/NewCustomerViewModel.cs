@@ -260,8 +260,8 @@
             var mainViewModel = MainViewModel.GetInstance();
             mainViewModel.Token = response2;
             mainViewModel.Categories = new CategoriesViewModel();
-            await navigationService.Back();
-            await navigationService.Navigate("CategoriesView");
+            await navigationService.BackOnLogin();
+            navigationService.SetMainPage("MasterView");
 
             IsRunning = false;
             IsEnabled = true;

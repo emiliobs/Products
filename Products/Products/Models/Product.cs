@@ -99,7 +99,7 @@
         private async void Edit()
         {
             MainViewModel.GetInstance().EditProduct = new EditProductViewModel(this);
-            await navigationService.Navigate("EditProductView");
+            await navigationService.NavigateOnMaster("EditProductView");
         }
         #endregion
 
