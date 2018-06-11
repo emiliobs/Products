@@ -58,7 +58,7 @@ namespace Products.ViewModels
             MyMenu.Add(new Menu
             {
                 Icon = "ic_settings",
-                pageName = "MyProfileView",
+                PageName = "MyProfileView",
                 Title = "My Profile",
                 
 
@@ -67,7 +67,7 @@ namespace Products.ViewModels
             MyMenu.Add(new Menu
             {
                 Icon = "ic_map",
-                pageName = "UbicationsView",
+                PageName = "UbicationsView",
                 Title = "Ubications",
 
 
@@ -76,7 +76,7 @@ namespace Products.ViewModels
             MyMenu.Add(new Menu
             {
                 Icon = "ic_exit_to_app",
-                pageName = "LoginView",
+                PageName = "LoginView",
                 Title = "Close Sesión",
 
 
