@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.Products" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.companyname.Products" android:installLocation="internalOnly">
 	<uses-sdk android:minSdkVersion="19" android:targetSdkVersion="17" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.CAMERA" />
@@ -11,14 +11,10 @@
 	<uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
 	<uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-	<application android:label="Products.Android">
+	<application android:label="Products.Android" android:icon="@drawable/ic_product">
 		<provider android:name="android.support.v4.content.FileProvider" android:authorities="${applicationId}.fileprovider" android:exported="false" android:grantUriPermissions="true">
 			<meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths"></meta-data>
-         </provider>
-
-	        <meta-data 
-            android:name="com.google.android.maps.v2.API_KEY" 
-            android:value="AIzaSyDAMaoA3p_7KO5onLU97HrpkXjVKuAhzFw"/>  		 
-		
+		</provider>
+		<meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyDAMaoA3p_7KO5onLU97HrpkXjVKuAhzFw" />
 	</application>
 </manifest>

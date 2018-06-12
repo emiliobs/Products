@@ -1,3 +1,4 @@
+using Products.Models;
 using Products.Views;
 using System;
 using Xamarin.Forms;
@@ -20,10 +21,26 @@ namespace Products
 
             //MainPage = new MasterView();
             MainPage = new NavigationPage(new LoginView());
-        } 
+        }
         #endregion
 
         #region Methods
+
+        public static Action LoginFacebookFail
+        {
+            get
+            {
+                return new Action(() => Current.MainPage =
+                                  new NavigationPage(new LoginView()));
+            }
+        }
+
+        public static void LoginFacebookSuccess(FacebookResponse profile)
+        {
+            Current.MainPage = new MasterView();
+        }
+
+
         protected override void OnStart()
         {
             // Handle when your app starts
