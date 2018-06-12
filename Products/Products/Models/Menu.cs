@@ -48,7 +48,7 @@
                     navigationService.SetMainPage("LoginView");
                     break;
                 case "UbicationsView":
-                    MainViewModel.GetInstance().Ubications = new UbicationsView();
+                    MainViewModel.GetInstance().Ubications = new UbicationsViewModel();
                     await navigationService.NavigateOnMaster("UbicationsView");
                     break;
             }
