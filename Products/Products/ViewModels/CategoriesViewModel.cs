@@ -22,12 +22,28 @@
 
         #region Atributes
         List<Category> categories;
+        string _filter;
         bool _isRefreshing;
 
         ObservableCollection<Category> _categories;
         #endregion
 
         #region Properties
+
+        public string Filter
+        {
+            get => _filter;
+            set
+            {
+                if (_filter != value)
+                {
+                    _filter = value;
+                    Search();
+                    OnPropertyChanged();
+                }
+            }
+        }
+
         public bool IsRefreshing
         {
             get => _isRefreshing;
@@ -87,10 +103,33 @@
 
         public ICommand RefreshCommand { get => new RelayCommand(Refresh); }
 
+        public ICommand SearchCommand { get => new RelayCommand(Search); }
+
+
 
         #endregion
 
         #region Methods
+
+
+
+        private void Search()
+        {
+            IsRefreshing = true;
+
+            if (string.IsNullOrEmpty(Filter))
+            {
+                CategoriesList = new ObservableCollection<Category>(categories.OrderBy(c => c.Description));
+            }
+            else
+            {
+                CategoriesList = new ObservableCollection<Category>(
+               categories.Where(c => c.Description.ToLower().Contains(Filter.ToLower())).OrderBy(c => c.Description));
+            }
+
+            IsRefreshing = false;
+        }
+
 
         private void Refresh()
         {
@@ -190,7 +229,8 @@
             //aqui me llega una lista_
              categories = (List<Category>)response.Result;
             //aqui porgo la lista en el la colleccion a de la propiedad categorris
-            CategoriesList = new ObservableCollection<Category>(categories.OrderBy(c => c.Description));
+            //CategoriesList = new ObservableCollection<Category>(categories.OrderBy(c => c.Description));
+            Search();
 
             IsRefreshing = false;
         }
