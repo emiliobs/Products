@@ -14,6 +14,7 @@
         ApiService apiService;
         DialogService dialogService;
         NavigationService navigationService;
+        DataService dataService;
 
         #endregion
 
@@ -103,12 +104,13 @@
             apiService = new ApiService();
             dialogService = new DialogService();
             navigationService = new NavigationService();
+            dataService = new DataService();
 
             IsToggled = true;
             IsEnabled = true;
 
-            Email = "emilio@hotmail.com";
-            Password = "555555";
+            //Email = "emilio@hotmail.com";
+            //Password = "555555";
 
         }
         #endregion
@@ -185,6 +187,11 @@
                 Password = string.Empty;
                 return;
             }
+
+            //aqui llamo a la propeidad isremembered y le guardo el istoggled (si es tru or false)
+            response.IsRemembered = IsToggled;
+            dataService.DeleteAllAndInsert(response);
+           
 
             //Apuntador del patron singleton
             var mainViewModel = MainViewModel.GetInstance();

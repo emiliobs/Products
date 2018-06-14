@@ -18,6 +18,7 @@
         #region Services
         ApiService apiService;
         DialogService dialogService;
+        DataService dataService;
         #endregion
 
         #region Atributes
@@ -76,6 +77,7 @@
 
             apiService = new ApiService();
             dialogService = new DialogService();
+            dataService = new DataService();
 
             LoadCategories();
                 
@@ -203,36 +205,62 @@
 
             if (!connection.IsSuccess)
             {
-                await dialogService.ShowMessage("Error", connection.Message);
+                categories = dataService.Get<Category>(true);
 
-                return;
+                if (categories.Count.Equals(0))
+                {
+                     await dialogService.ShowMessage("Error", "Dear Users, YAPE.");
+
+                    return;
+                }
+
+
+              
             }
-
-            var apiSecurity = Application.Current.Resources["ApiProduct"].ToString();
-           var mainViewModel = MainViewModel.GetInstance();
-
-            var response = await apiService.GetList<Category>(
-                apiSecurity,
-                "/api",
-                "/Categories",
-                mainViewModel.Token.TokenType,
-                mainViewModel.Token.AccessToken);
-
-            if (!response.IsSuccess)
+            else
             {
+                var apiSecurity = Application.Current.Resources["ApiProduct"].ToString();
+                var mainViewModel = MainViewModel.GetInstance();
 
-                await dialogService.ShowMessage("Error", response.Message);
+                var response = await apiService.GetList<Category>(
+                    apiSecurity,
+                    "/api",
+                    "/Categories",
+                    mainViewModel.Token.TokenType,
+                    mainViewModel.Token.AccessToken);
 
-                return;
+                if (!response.IsSuccess)
+                {
+
+                    await dialogService.ShowMessage("Error", response.Message);
+
+                    return;
+                }
+
+                //aqui me llega una lista_
+                categories = (List<Category>)response.Result;
+                //aqui porgo la lista en el la colleccion a de la propiedad categorris
+                //CategoriesList = new ObservableCollection<Category>(categories.OrderBy(c => c.Description));
+
+                //aqui utilizo un metodo para guardar los datos en la BD en modo desconectado de wifi:
+                SaveCategoriesOnDb();
             }
 
-            //aqui me llega una lista_
-             categories = (List<Category>)response.Result;
-            //aqui porgo la lista en el la colleccion a de la propiedad categorris
-            //CategoriesList = new ObservableCollection<Category>(categories.OrderBy(c => c.Description));
+
             Search();
 
             IsRefreshing = false;
+        }
+
+        private void SaveCategoriesOnDb()
+        {
+            dataService.DeleteAll<Category>();
+
+            foreach (var category in categories)
+            {
+                dataService.Insert(category);
+                dataService.Save(category.Products);
+            }
         }
         #endregion
     }

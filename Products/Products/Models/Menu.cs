@@ -13,6 +13,7 @@
         #region services
 
         NavigationService navigationService;
+        DataService dataService;
 
         #endregion
 
@@ -27,7 +28,8 @@
         public Menu()
         {
             navigationService = new NavigationService();
-        }
+            dataService = new DataService();
+       }
 
         #endregion
 
@@ -44,9 +46,13 @@
            switch(PageName)
            {
                 case "LoginView":
-                    MainViewModel.GetInstance().Login = new LoginViewModel();
+                    var mainViewModel = MainViewModel.GetInstance();
+                    mainViewModel.Token.IsRemembered = false;
+                    dataService.Update(mainViewModel.Token);
+                    mainViewModel.Login = new LoginViewModel();
                     navigationService.SetMainPage("LoginView");
                     break;
+
                 case "UbicationsView":
                     MainViewModel.GetInstance().Ubications = new UbicationsViewModel();
                     await navigationService.NavigateOnMaster("UbicationsView");

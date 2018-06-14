@@ -1,4 +1,6 @@
 using Products.Models;
+using Products.Services;
+using Products.ViewModels;
 using Products.Views;
 using System;
 using Xamarin.Forms;
@@ -9,6 +11,16 @@ namespace Products
 {
 	public partial class App : Application
 	{
+        #region Services
+
+        ApiService apiService;
+        DialogService dialogService;
+        NavigationService navigationService;
+        DataService dataService;
+
+
+        #endregion
+
         #region Properties
         public static NavigationPage Navigator { get; internal set; }
         public static MasterView Master { get; internal set; }
@@ -19,8 +31,29 @@ namespace Products
         {
             InitializeComponent();
 
-            //MainPage = new MasterView();
-            MainPage = new NavigationPage(new LoginView());
+            apiService = new ApiService();
+            dialogService = new DialogService();
+            navigationService = new NavigationService();
+            dataService = new DataService();
+
+            var token = dataService.First<TokenResponse>(false);
+            if (token != null &&
+                token.IsRemembered &&
+                token.Expires > DateTime.Now)
+            {
+                var mainViewModel = MainViewModel.GetInstance();
+                mainViewModel.Token = token;
+                mainViewModel.Categories = new CategoriesViewModel();
+                navigationService.SetMainPage("MasterView");
+            }
+            else
+            {
+                navigationService.SetMainPage("LoginView");
+            }
+
+
+            ////MainPage = new MasterView();
+            //MainPage = new NavigationPage(new LoginView());
         }
         #endregion
 

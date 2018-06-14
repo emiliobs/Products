@@ -28,10 +28,13 @@
         public DateTime Issued { get; set; }
 
         [JsonProperty(".expires")]
-        public string Expires { get; set; }
+        public DateTime Expires { get; set; }
 
         [JsonProperty("error_description")]
         public string ErrorDescription { get; set; }
+
+        public bool IsRemembered { get; set; }
+
         #endregion
 
         #region Meethods
