@@ -1,15 +1,16 @@
-﻿using GalaSoft.MvvmLight.Command;
-using Products.Services;
-using Products.ViewModels;
-using Products.Views;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows.Input;
-using Xamarin.Forms;
-
-namespace Products.Models
+﻿namespace Products.Models
 {
+    using GalaSoft.MvvmLight.Command;
+    using Products.Services;
+    using Products.ViewModels;
+    using Products.Views;
+    using SQLite.Net.Attributes;
+    using SQLiteNetExtensions.Attributes;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+    using System.Windows.Input;
+    using Xamarin.Forms;
     public class Category
     {
 
@@ -21,8 +22,11 @@ namespace Products.Models
         #endregion
 
         #region Properties
+        [PrimaryKey]
         public int CategoryId { get; set; }
         public string Description { get; set; }
+
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<Product> Products { get; set; }
         #endregion
 

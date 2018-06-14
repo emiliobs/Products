@@ -1,12 +1,17 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Products.Models
+﻿namespace Products.Models
 {
+    using Newtonsoft.Json;
+    using SQLite;
+    using SQLite.Net.Attributes;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
     public class TokenResponse
     {
+        #region Properties
+        [PrimaryKey, AutoIncrement]
+        public int TokenResponseId { get; set; }
+
         [JsonProperty("access_token")]
         public string AccessToken { get; set; }
 
@@ -27,7 +32,19 @@ namespace Products.Models
 
         [JsonProperty("error_description")]
         public string ErrorDescription { get; set; }
+        #endregion
+
+        #region Meethods
+
+        public override int GetHashCode()
+        {
+            return TokenResponseId;
+        }
+
+        #endregion
 
     }
+
+
 
 }
