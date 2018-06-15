@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Products.Views.SyncView"
+             BackgroundColor="{StaticResource BackgroundColor}"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="Sync View.">
+    <ContentPage.Content>
+        <StackLayout BindingContext="{Binding Sync}">
+            <Label
+                FontSize="Large"
+                TextColor="{StaticResource FontColor}"
+                Text="{Binding Message, Mode=TwoWay}" 
+                HorizontalOptions="Center" 
+                   VerticalOptions="CenterAndExpand">                
+            </Label>
+            <ActivityIndicator IsRunning="{Binding IsRunning}"></ActivityIndicator>
+            <Button
+               Command="{Binding SyncCommand}"
+                BorderRadius="23"
+                FontAttributes="Bold"
+                IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+               HeightRequest="46"
+                Margin="30,0"
+               Text="Sync."
+               BackgroundColor="{StaticResource AccentColor1}"
+                VerticalOptions="CenterAndExpand">
+            </Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

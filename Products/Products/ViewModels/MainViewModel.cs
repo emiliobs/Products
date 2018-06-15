@@ -27,6 +27,7 @@ namespace Products.ViewModels
         public NewCustomerViewModel NewCustomer { get; set; }
         public UbicationsViewModel Ubications { get; set; }
         public TokenResponse Token { get; set; }
+        public SyncViewModel Sync { get; set; }
         public  ObservableCollection<Menu> MyMenu { get; set; }
         #endregion
 
