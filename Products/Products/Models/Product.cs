@@ -41,6 +41,7 @@
         public string Remarks { get; set; }
 
         public byte[] ImageArray { get; set; }
+        public bool PendingToSave { get; set; }
 
         public string ImageFullPath
         {

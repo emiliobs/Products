@@ -18,6 +18,7 @@
         DialogService dialogService;
         ApiService ApiService;
         NavigationService navigationService;
+        DataService dataService;
         #endregion
 
         #region Atributes
@@ -87,6 +88,7 @@
             ApiService = new ApiService();
             dialogService = new DialogService();
             navigationService = new NavigationService();
+            dataService = new DataService();
 
             ImageSource = "noimage";
             //Image = "noimage";
@@ -218,27 +220,37 @@
 
             if (!connection.IsSuccess)
             {
-                IsRunning = false;
-                IsEnabled = true;
-                await dialogService.ShowMessage("Error", connection.Message);
-                return;
+                product.PendingToSave = true;
+
+                //Aqui guarlo los datos del producto en la bd si nohay wifi o internet:
+                dataService.Insert(product);
+
+                await dialogService.ShowMessage("Message","The Product was save on local DB, " +
+                                                "don't forget to upload the record when you have wifi.");
+
+
+                //return;
             }
-
-            var apiSecurity = Application.Current.Resources["ApiProduct"].ToString();
-
-            var response = await ApiService.Post(apiSecurity, "/Api", "/Products", mainViewModel.Token.TokenType,
-                                                 mainViewModel.Token.AccessToken, product);
-
-            if (!response.IsSuccess)
+            else
             {
-                IsRunning = false;
-                IsEnabled = true;
+                var apiSecurity = Application.Current.Resources["ApiProduct"].ToString();
 
-                await dialogService.ShowMessage("Error", response.Message);
+                var response = await ApiService.Post(apiSecurity, "/Api", "/Products", mainViewModel.Token.TokenType,
+                                                     mainViewModel.Token.AccessToken, product);
 
-                return;
+                if (!response.IsSuccess)
+                {
+                    IsRunning = false;
+                    IsEnabled = true;
+
+                    await dialogService.ShowMessage("Error", response.Message);
+
+                    return;
+                }
+
+                product = (Product)response.Result;
             }
-            product = (Product)response.Result;
+                          
 
             var productsViewModel = ProductViewModel.GetInstance();
             productsViewModel.AddProduct(product);
