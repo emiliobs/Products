@@ -35,6 +35,8 @@
 
         public bool IsRemembered { get; set; }
 
+        public string Password { get; set; }
+
         #endregion
 
         #region Meethods

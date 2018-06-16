@@ -190,6 +190,8 @@
 
             //aqui llamo a la propeidad isremembered y le guardo el istoggled (si es tru or false)
             response.IsRemembered = IsToggled;
+            //aqui guardo el paswword en memoria:
+            response.Password = Password;
             dataService.DeleteAllAndInsert(response);
            
 

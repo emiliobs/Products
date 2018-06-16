@@ -34,7 +34,6 @@
                 smtp.EnableSsl = true;
                 await smtp.SendMailAsync(message);
             }
-
         }
     }
 }

@@ -91,7 +91,7 @@ namespace Products.Api.Controllers
             {
                 CreateUserASP(customer.Email, customer.Password);
                 await db.SaveChangesAsync();
-                
+
             }
             catch (Exception ex)
             {
@@ -114,7 +114,7 @@ namespace Products.Api.Controllers
         private bool CreateUserASP(string email, string password)
         {
             var userContext = new ApplicationDbContext();
-            var userManager = new UserManager<ApplicationUser>(                
+            var userManager = new UserManager<ApplicationUser>(
                 new UserStore<ApplicationUser>(userContext));
 
             var userASP = new ApplicationUser()
@@ -149,10 +149,52 @@ namespace Products.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
+        [Route("ChangePassword")]
+        public async Task<IHttpActionResult> ChangePassword(JObject form)
+        {
+            var email = string.Empty;
+            var currentPassword = string.Empty;
+            var newPassword = string.Empty;
+            dynamic jsonObject = form;
+
+            try
+            {
+                email = jsonObject.Email.Value;
+                currentPassword = jsonObject.CurrentPassword.Value;
+                newPassword = jsonObject.NewPassword.Value;
+            }
+            catch
+            {
+                return BadRequest("Incorrect call");
+            }
+
+            var userContext = new ApplicationDbContext();
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(userContext));
+            var userASP = userManager.FindByEmail(email);
+
+            if (userASP == null)
+            {
+                return NotFound();
+            }
+
+            var response = await userManager.ChangePasswordAsync(
+                userASP.Id,
+                currentPassword,
+                newPassword);
+            if (!response.Succeeded)
+            {
+                return BadRequest(response.Errors.FirstOrDefault());
+            }
+
+            return Ok(true);
+        }
+
+
+        [HttpPost]
         [Route("PasswordRecovery")]
         public async Task<IHttpActionResult> PasswordRecovery(JObject form)
         {
-
             try
             {
                 var email = string.Empty;
@@ -191,9 +233,9 @@ namespace Products.Api.Controllers
                 {
                     var subject = "Products - Password Recovery";
                     var body = string.Format(@"
-                <h1>Products App - Password Recovery</h1>
-                <p>Your new password is: <strong>{0}</strong></p>
-                <p>Please, don't forget change it for one easy remember for you.",
+                        <h1>Products App - Password Recovery</h1>
+                        <p>Your new password is: <strong>{0}</strong></p>
+                        <p>Please, don't forget change it for one easy remember for you.",
                         newPassword);
 
                     await MailHelper.SendMail(email, subject, body);
@@ -207,9 +249,8 @@ namespace Products.Api.Controllers
             {
                 return BadRequest(ex.Message);
             }
-
-
         }
+
 
         protected override void Dispose(bool disposing)
         {
