@@ -29,7 +29,8 @@
                     "application/json");
                 var client = new HttpClient();
                 client.BaseAddress = new Uri(urlBase);
-                var url = string.Format("{0}{1}", servicePrefix, controller);
+                var url = $"{servicePrefix}{controller}";
+                //var url = string.Format("{0}{1}", servicePrefix, controller);
                 var response = await client.PostAsync(url, content);
 
                 if (!response.IsSuccessStatusCode)

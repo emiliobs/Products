@@ -119,11 +119,20 @@
         public ICommand LoginCommand { get => new RelayCommand(Login); }
         public ICommand RegisterNewUserCommand { get => new RelayCommand(RegisterNewUse); }
 
-
+        public ICommand RecoverPasswordCommand { get => new RelayCommand(RecoverPassword); }
 
         #endregion
 
         #region Methods
+
+        private async void RecoverPassword()
+        {
+            MainViewModel.GetInstance().PasswordRecovery = new PasswordRecoveryViewModel();
+            await navigationService.NavigateOnLogin("PasswordRecoveryView");
+
+           
+
+        }
 
         private async void RegisterNewUse()
         {

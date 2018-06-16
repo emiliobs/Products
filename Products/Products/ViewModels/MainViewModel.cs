@@ -29,6 +29,8 @@ namespace Products.ViewModels
         public TokenResponse Token { get; set; }
         public SyncViewModel Sync { get; set; }
         public MyProfileViewModel MyProfile { get; set; }
+
+        public PasswordRecoveryViewModel PasswordRecovery { get; set; }
         public  ObservableCollection<Menu> MyMenu { get; set; }
         #endregion
 

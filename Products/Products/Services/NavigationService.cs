@@ -31,6 +31,9 @@
                   case "NewCustomerView":
                     await Application.Current.MainPage.Navigation.PushAsync(new NewCustomerView());
                     break;
+                case "PasswordRecoveryView":
+                    await Application.Current.MainPage.Navigation.PushAsync(new PasswordRecoveryView());
+                    break;
             }
 
         }
